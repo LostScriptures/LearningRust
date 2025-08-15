@@ -5,8 +5,8 @@
 This agenda is used as an orientation.
 
 - [ ] Setup
-  - [ ] RustC & Cargo (Updating if already installed)
-  - [ ] (Optional) Weitere Rust Tools
+  - [ ] General (Updating if already installed)
+  - [ ] (Optional) Further Rust Tools
     - [ ] `cargo binstall`
     - [ ] `cargo generate astra`
       - [ ] Dependency: Nushell
@@ -19,15 +19,15 @@ This agenda is used as an orientation.
   - [ ] Mutability
   - [ ] Global variables with static
   - [ ] Type Annotations
-- [ ] Datentypen
-  - [ ] integers 
+- [ ] Datatypes
+  - [ ] Integers 
     - [ ] signed, unsigned
-    - [ ] Prefixe
+    - [ ] Prefixes
       - [ ] 0x
       - [ ] 0o
       - [ ] 0b
       - [ ] b'<x>'
-    - [ ] Überlauf
+    - [ ] Overflow
       - [ ] Wrapping add
       - [ ] Saturating add
     - [ ] isize
@@ -62,7 +62,7 @@ This agenda is used as an orientation.
     - [ ] mutable 
   - [ ] Memory
     - [ ] Stack for scalar values
-    - [ ] Heap for 
+    - [ ] Heap for complex data types
 - [ ] Loops
   - [ ] `loop`
   - [ ] `for` 
@@ -103,7 +103,7 @@ This agenda is used as an orientation.
 - [ ] Useful libraries
   - [ ] tracing
   - [ ] serde
-  - [ ] reqwest
+  - [ ] reqwest (yes, it is really spelled like this)
   - [ ] for apis
     - [ ] axum
     - [ ] tonic
