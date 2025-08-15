@@ -96,6 +96,7 @@ This agenda is used as an orientation.
 
 - [ ] Modules and visibility
 
+- [ ] Generics
 - [ ] Traits
 - [ ] Polymorphisms
 
