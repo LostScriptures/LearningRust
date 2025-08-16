@@ -5,7 +5,7 @@
 This agenda is used as an orientation.
 
 - [ ] Setup
-  - [ ] General (Updating if already installed)
+  - [X] General (Updating if already installed)
   - [ ] Setting up a workspace
   - [ ] (Optional) Further Rust Tools
     - [ ] `cargo binstall`
