@@ -42,7 +42,7 @@ This agenda is used as an orientation.
   - [X] Tupels
   - [X] Arrays
   - [X] Vectors
-  - [ ] HashMaps
+  - [X] HashMaps
     - [X] insert
     - [X] remove
     - [X] iteration
