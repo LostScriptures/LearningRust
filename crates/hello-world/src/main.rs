@@ -30,7 +30,7 @@ fn main() {
             Ordering::Equal => {
                 println!("SEHR GUT!!!!!!\nDU HAST GEWONNEN OwO");
                 break;
-            }            
+            }
         }
     }
 }
