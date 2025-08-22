@@ -1,12 +1,12 @@
 pub mod test;
+use crate::test::A as B;
 
 fn main() {
+    // Tests
     let mut s = String::from("Hello, world!");
-
     let rs = &s;
-    println!("{rs}");
 
-    let (a, b) = test::test();
+    println!("{rs}");
 
     {
         let ms = &mut s;
@@ -16,6 +16,6 @@ fn main() {
 
     let ss = &s;
     println!("{ss}");
-    print!("{a} | ");
-    print!("{b}\n");
+
+    let a: B = B { x: 12, y: 13 };
 }
