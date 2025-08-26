@@ -1,5 +1,5 @@
 pub mod test;
-use crate::test::A as B;
+use crate::test::A;
 
 fn main() {
     // Tests
@@ -17,5 +17,11 @@ fn main() {
     let ss = &s;
     println!("{ss}");
 
-    let a: B = B { x: 12, y: 13 };
+    let mut a: A = A { x: 12, y: 13 };
+
+    println!("B: {} | {}", a.x, a.y);
+
+    a = a.add(10, 10);
+
+    println!("B: {} | {}", a.x, a.y);
 }
