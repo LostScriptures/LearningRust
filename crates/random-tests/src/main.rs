@@ -13,11 +13,4 @@ impl Dummy {
 fn main() {
     let new = Dummy {};
     new.pyramid(10);
-
-    
-    let s = "20";
-
-    let i = s.parse::<i32>();
-
-
 }
