@@ -27,14 +27,14 @@ pub trait Geo {
 }
 
 impl Point {
-    fn get_dist(&self, target_point: &Point) -> f32 {
+    pub fn get_dist(&self, target_point: &Point) -> f32 {
         let vec = Point {
             x: target_point.x - self.x,
             y: target_point.y - self.y,
         };
         f32::sqrt((vec.x.pow(2) + vec.y.pow(2)) as f32)
     }
-    fn get_minmax(&self, p2: &Point) -> (Point, Point) {
+    pub fn get_minmax(&self, p2: &Point) -> (Point, Point) {
         let min_point = Point {
             x: cmp::min(self.x, p2.x).abs(),
             y: cmp::min(self.y, p2.y).abs(),
@@ -44,6 +44,13 @@ impl Point {
             y: cmp::max(self.y, p2.y).abs(),
         };
         (min_point, max_point)
+    }
+}
+
+impl Line {
+    pub fn get_len(&self) -> f32 {
+        let dist = self.p1.get_dist(&self.p2);
+        dist
     }
 }
 
@@ -60,11 +67,11 @@ impl Geo for Square {
 
 impl Geo for Triangle {
     fn area(&self) -> i32 {
-        let exp1 = self.p1.x * (self.p2.y - self.p3.y);
-        let exp2 = self.p2.x * (self.p3.y - self.p1.y);
-        let exp3 = self.p3.x * (self.p1.y - self.p2.y);
+        let exp1 = (self.p1.x * (self.p2.y - self.p3.y)) as f32;
+        let exp2 = (self.p2.x * (self.p3.y - self.p1.y)) as f32;
+        let exp3 = (self.p3.x * (self.p1.y - self.p2.y)) as f32;
 
-        (1 / 2) * (exp1 + exp2 + exp3).abs()
+        ((1.0 / 2.0) * (exp1 + exp2 + exp3).abs()) as i32
     }
     fn circumference(&self) -> i32 {
         let mut dist: f32 = 0.0;
@@ -72,6 +79,22 @@ impl Geo for Triangle {
         dist += self.p1.get_dist(&self.p2);
         dist += self.p2.get_dist(&self.p3);
         dist += self.p3.get_dist(&self.p1);
+        dist as i32
+    }
+}
+
+impl Geo for Polygon {
+    fn area(&self) -> i32 {
+        todo!();
+    }
+    fn circumference(&self) -> i32 {
+        let mut last = self.points.first().expect("No points specified");
+        let mut dist: f32 = 0.0;
+
+        for i in 1..self.points.len() {
+            dist += last.get_dist(&self.points[i]);
+            last = self.points.get(i).expect("No more points");
+        }
         dist as i32
     }
 }
