@@ -44,9 +44,6 @@ fn main() {
 
     let mut arr: [[i32; 3]; 3] = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
-    #[allow(unused_assignments)]
-    let (mut x, mut y, mut c) = (0, 0, 0);
-
     for x in 0..arr.len() {
         for y in 0..arr[x].len() {
             arr[x][y] = 1;
