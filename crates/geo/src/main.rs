@@ -3,19 +3,6 @@ use std::vec;
 
 pub mod shapes;
 
-struct A {
-    test: i32,
-}
-
-impl Clone for A {
-    fn clone(&self) -> Self {
-        A { test: self.test }
-    }
-    fn clone_from(&mut self, source: &Self) {
-        self.test = source.test;
-    }
-}
-
 fn main() {
     let line = Line {
         p1: Point { x: 10, y: 15 },
@@ -54,4 +41,16 @@ fn main() {
     println!("--- Triangle ---\n{}\n{}", tri.area(), tri.circumference());
 
     println!("--- Line ---\n{}", line.get_len());
+
+    let mut arr: [[i32; 3]; 3] = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+
+    #[allow(unused_assignments)]
+    let (mut x, mut y, mut c) = (0, 0, 0);
+
+    for x in 0..arr.len() {
+        for y in 0..arr[x].len() {
+            arr[x][y] = 1;
+        }
+    }
+    println!("{arr:?}");
 }
