@@ -1,5 +1,7 @@
 use std::cmp;
+use std::fmt;
 
+// Part for the test with geometry
 pub struct Point {
     pub x: i32,
     pub y: i32,
@@ -19,11 +21,6 @@ pub struct Triangle {
 }
 pub struct Polygon {
     pub points: Vec<Point>,
-}
-
-pub trait Geo {
-    fn area(&self) -> i32;
-    fn circumference(&self) -> i32;
 }
 
 impl Point {
@@ -46,7 +43,6 @@ impl Point {
         (min_point, max_point)
     }
 }
-
 impl Line {
     pub fn get_len(&self) -> f32 {
         let dist = self.p1.get_dist(&self.p2);
@@ -54,6 +50,10 @@ impl Line {
     }
 }
 
+pub trait Geo {
+    fn area(&self) -> i32;
+    fn circumference(&self) -> i32;
+}
 impl Geo for Square {
     fn area(&self) -> i32 {
         let (min_point, max_point) = self.p1.get_minmax(&self.p2);
@@ -64,7 +64,6 @@ impl Geo for Square {
         ((max_point.x - min_point.x) * 2) + ((max_point.y - min_point.y) * 2)
     }
 }
-
 impl Geo for Triangle {
     fn area(&self) -> i32 {
         let exp1 = (self.p1.x * (self.p2.y - self.p3.y)) as f32;
@@ -82,7 +81,6 @@ impl Geo for Triangle {
         dist as i32
     }
 }
-
 impl Geo for Polygon {
     fn area(&self) -> i32 {
         todo!();
@@ -96,5 +94,35 @@ impl Geo for Polygon {
             last = self.points.get(i).expect("No more points");
         }
         dist as i32
+    }
+}
+
+// Random tests
+pub fn loop_test() {
+    let mut arr: [[i32; 3]; 3] = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+
+    for x in 0..arr.len() {
+        for y in 0..arr[x].len() {
+            arr[x][y] = 1;
+        }
+    }
+    println!("{arr:?}");
+}
+
+pub enum Pos {
+    X(i32),
+    Y(i32),
+}
+impl fmt::Display for Pos {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Pos::X(val) => write!(f, "X({})", val),
+            Pos::Y(val) => write!(f, "y({})", val),
+        }
+    }
+}
+impl Pos {
+    pub fn get_value(&self) {
+        println!("{}", self)
     }
 }

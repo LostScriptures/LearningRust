@@ -42,12 +42,6 @@ fn main() {
 
     println!("--- Line ---\n{}", line.get_len());
 
-    let mut arr: [[i32; 3]; 3] = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
-
-    for x in 0..arr.len() {
-        for y in 0..arr[x].len() {
-            arr[x][y] = 1;
-        }
-    }
-    println!("{arr:?}");
+    let pos = Pos::X(200);
+    pos.get_value();
 }
