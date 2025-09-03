@@ -126,3 +126,7 @@ impl Pos {
         println!("{}", self)
     }
 }
+
+pub fn why() {
+    super::test();
+}

@@ -3,6 +3,10 @@ use std::vec;
 
 pub mod shapes;
 
+pub fn test() {
+    println!("Wrong way around ^^");
+}
+
 fn main() {
     let line = Line {
         p1: Point { x: 10, y: 15 },
@@ -32,6 +36,8 @@ fn main() {
     ];
 
     let pol = Polygon { points: ps };
+
+    why(); // Just to see how super works
 
     println!("--- Polygon ---\n{}", pol.circumference());
 
