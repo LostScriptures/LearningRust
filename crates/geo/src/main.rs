@@ -1,7 +1,9 @@
 use crate::shapes::*;
+use crate::vecs::*;
 use std::vec;
 
 pub mod shapes;
+pub mod vecs;
 
 pub fn test() {
     println!("Wrong way around ^^");
@@ -50,4 +52,6 @@ fn main() {
 
     let pos = Pos::X(200);
     pos.get_value();
+
+    loop_vec();
 }
