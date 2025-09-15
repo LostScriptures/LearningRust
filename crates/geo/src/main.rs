@@ -2,6 +2,7 @@ use crate::shapes::*;
 use crate::vecs::*;
 use std::vec;
 
+pub mod errors;
 pub mod shapes;
 pub mod vecs;
 
@@ -54,4 +55,9 @@ fn main() {
     pos.get_value();
 
     loop_vec();
+
+    match errors::read_username() {
+        Ok(name) => println!("Username: {name}"),
+        Err(e) => panic!("An Error ocurred: {e:?}"),
+    }
 }

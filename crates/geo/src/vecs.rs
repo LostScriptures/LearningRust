@@ -1,9 +1,7 @@
-use std::vec;
-
 pub fn loop_vec() {
     let mut v: Vec<i32> = Vec::new();
 
-    for i in 0..100 {
+    for i in 0..50 {
         v.push(i);
     }
 
