@@ -15,7 +15,10 @@ fn main() {
         std::io::stdout().flush().expect("Could not flush stdout");
 
         let mut input = String::new();
-        std::io::stdin().read_line(&mut input).unwrap();
+
+        std::io::stdin()
+            .read_line(&mut input)
+            .unwrap_or_else(|e| panic!("{e}"));
         let input = match input.trim().parse::<i32>() {
             Ok(v) => v,
             Err(e) => {
