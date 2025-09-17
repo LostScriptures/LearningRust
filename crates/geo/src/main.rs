@@ -1,16 +1,27 @@
 use crate::shapes::*;
+#[allow(unused_imports)]
 use crate::vecs::*;
 use std::vec;
 
 pub mod errors;
 pub mod shapes;
 pub mod vecs;
+pub mod generics;
 
 pub fn test() {
     println!("Wrong way around ^^");
 }
 
-fn main() {
+#[allow(dead_code)]
+fn error_test() {
+    match errors::read_username() {
+        Ok(name) => println!("Username: {name}"),
+        Err(e) => panic!("An Error ocurred: {e:?}"),
+    }
+}
+
+#[allow(dead_code)]
+fn shape_test() {
     let line = Line {
         p1: Point { x: 10, y: 15 },
         p2: Point { x: 5, y: -5 },
@@ -40,8 +51,6 @@ fn main() {
 
     let pol = Polygon { points: ps };
 
-    why(); // Just to see how super works
-
     println!("--- Polygon ---\n{}", pol.circumference());
 
     println!("--- Square ---\n{}", sqr.area());
@@ -53,11 +62,14 @@ fn main() {
 
     let pos = Pos::X(200);
     pos.get_value();
+}
 
-    loop_vec();
+fn main() {
+    // shape_test();
 
-    match errors::read_username() {
-        Ok(name) => println!("Username: {name}"),
-        Err(e) => panic!("An Error ocurred: {e:?}"),
-    }
+    why(); // Just to see how super works
+
+    // loop_vec();
+
+    // error_test();
 }

@@ -1,5 +1,5 @@
-use std::fs::{self, File};
-use std::io::{self, Read};
+use std::fs;
+use std::io;
 
 pub fn read_username() -> Result<String, io::Error> {
     // let mut username_file = File::open("username.txt")?;
