@@ -1,12 +1,15 @@
-use crate::shapes::*;
 #[allow(unused_imports)]
 use crate::vecs::*;
+use crate::{
+    generics::{Article, Post, notify},
+    shapes::*,
+};
 use std::vec;
 
 pub mod errors;
+pub mod generics;
 pub mod shapes;
 pub mod vecs;
-pub mod generics;
 
 pub fn test() {
     println!("Wrong way around ^^");
@@ -64,12 +67,37 @@ fn shape_test() {
     pos.get_value();
 }
 
+#[allow(dead_code)]
+fn trait_test() {
+    let news = Article {
+        author: String::from("lost_script"),
+        headline: String::from("10 Most usefull ways to UwU"),
+        content: String::from("1. UwU\n2. OwO\n3. TuT\n4. ^w^\n5. :3\n ..."),
+    };
+    let post = Post {
+        username: String::from("lostplayer"),
+        content: String::from("Gib bois"),
+        repost: false,
+    };
+    let repost = Post {
+        username: String::from("yesman"),
+        content: String::from("Gib bois"),
+        repost: true,
+    };
+
+    notify(&news);
+    notify(&post);
+    notify(&repost);
+}
+
 fn main() {
     // shape_test();
 
-    why(); // Just to see how super works
+    // why(); // Just to see how super works
 
     // loop_vec();
 
     // error_test();
+    
+    trait_test();
 }
