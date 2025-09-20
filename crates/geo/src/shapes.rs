@@ -117,13 +117,16 @@ impl fmt::Display for Pos {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Pos::X(val) => write!(f, "X({})", val),
-            Pos::Y(val) => write!(f, "y({})", val),
+            Pos::Y(val) => write!(f, "Y({})", val),
         }
     }
 }
 impl Pos {
     pub fn get_value(&self) {
         println!("{}", self)
+    }
+    pub fn get_string(&self) -> String {
+        format!("{}", self)
     }
 }
 
