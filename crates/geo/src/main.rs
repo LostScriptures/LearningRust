@@ -1,7 +1,8 @@
 #[allow(unused_imports)]
 use crate::vecs::*;
+#[allow(unused_imports)]
 use crate::{
-    generics::{Article, Post, notify},
+    generics::{Article, Post, lifetime_test, notify},
     shapes::*,
 };
 use std::vec;
@@ -9,6 +10,7 @@ use std::vec;
 pub mod errors;
 pub mod generics;
 pub mod shapes;
+pub mod tests;
 pub mod vecs;
 
 pub fn test() {
@@ -98,6 +100,8 @@ fn main() {
     // loop_vec();
 
     // error_test();
-    
-    trait_test();
+
+    // trait_test();
+
+    // lifetime_test();
 }
