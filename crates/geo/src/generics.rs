@@ -1,3 +1,4 @@
+// Traits
 pub trait Summary {
     fn summarize_author(&self) -> String;
     fn summarize(&self) -> String {
@@ -43,4 +44,24 @@ pub fn notify(item: &impl Summary) {
     // Short form of fn notify<T: Summary>(item: &T) {}
     // Can also be done with where: fn a<T, U>(ina: &T, inb: &U) where T: SomeTrait + SomeOtherTrait, U: ThirdTrait {}
     println!("{}", item.summarize());
+}
+
+// Lifetimes
+
+fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
+    // 'a defines that the information a and b are referencing has to live
+    // at least as long as the return of longest()
+    if a.len() > b.len() { a } else { b }
+}
+
+pub fn lifetime_test() {
+    let s1 = String::from("UwU");
+    let s2 = String::from("Notices ur bulge");
+    let result: &str;
+
+    {
+        result = longest(&s1, &s2);
+    }
+
+    println!("{}", result);
 }

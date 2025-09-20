@@ -1,7 +1,7 @@
 #[allow(unused_imports)]
 use crate::vecs::*;
 use crate::{
-    generics::{Article, Post, notify},
+    generics::{Article, Post, lifetime_test, notify},
     shapes::*,
 };
 use std::vec;
@@ -98,6 +98,8 @@ fn main() {
     // loop_vec();
 
     // error_test();
-    
-    trait_test();
+
+    // trait_test();
+
+    lifetime_test();
 }
