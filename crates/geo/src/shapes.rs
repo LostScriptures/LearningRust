@@ -133,3 +133,14 @@ impl Pos {
 pub fn why() {
     super::test();
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test_pos() {
+        let a = Pos::X(10);
+        assert_eq!(a.get_string(), "X(10)");
+    }
+}

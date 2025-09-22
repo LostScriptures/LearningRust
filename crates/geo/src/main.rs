@@ -10,7 +10,6 @@ use std::vec;
 pub mod errors;
 pub mod generics;
 pub mod shapes;
-pub mod tests;
 pub mod vecs;
 
 pub fn test() {
