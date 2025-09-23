@@ -1,6 +1,9 @@
+mod common;
+
 // Run this with cargo test --test integration_test
 #[test]
 fn error_tests() {
+    common::setup();
     geo::error_test();
 }
 
