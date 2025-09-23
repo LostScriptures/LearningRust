@@ -16,7 +16,6 @@ pub fn test() {
     println!("Wrong way around ^^");
 }
 
-#[allow(dead_code)]
 pub fn error_test() {
     match errors::read_username() {
         Ok(name) => println!("Username: {name}"),
@@ -24,7 +23,6 @@ pub fn error_test() {
     }
 }
 
-#[allow(dead_code)]
 pub fn shape_test() {
     let line = Line {
         p1: Point { x: 10, y: 15 },
@@ -68,7 +66,6 @@ pub fn shape_test() {
     pos.get_value();
 }
 
-#[allow(dead_code)]
 pub fn trait_test() {
     let news = Article {
         author: String::from("lost_script"),
@@ -89,4 +86,13 @@ pub fn trait_test() {
     notify(&news);
     notify(&post);
     notify(&repost);
+}
+
+// Funktion to print a pyramid with the height of n
+pub fn pyramid(n: usize) {
+    for i in 0..n {
+        let spaces = " ".repeat(n - i - 1);
+        let stars = "*".repeat(2 * i + 1);
+        println!("{}{}", spaces, stars);
+    }
 }
