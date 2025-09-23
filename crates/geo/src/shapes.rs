@@ -134,6 +134,7 @@ pub fn why() {
     super::test();
 }
 
+// Unit test
 #[cfg(test)]
 mod tests {
     use super::*;
