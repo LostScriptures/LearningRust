@@ -29,7 +29,7 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
         search(&config.query, &contents)
     };
 
-    for line in  results {
+    for line in results {
         println!("{line}");
     }
 
@@ -49,11 +49,11 @@ impl Config {
         }
 
         let ignore_case = env::var("IGNORE_CASE").is_ok();
-        
+
         Ok(Config {
             query: args[1].clone(),
             file_path: args[2].clone(),
-            ignore_case
+            ignore_case,
         })
     }
 }
