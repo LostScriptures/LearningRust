@@ -1,4 +1,5 @@
 use crate::closures::{closure_borrow, closure_count, closure_thread, implied_type};
+use crate::iterators::{lazy_test, map_and_filter};
 #[allow(unused_imports)]
 use crate::vecs::*;
 #[allow(unused_imports)]
@@ -102,18 +103,20 @@ fn closure_test() {
     closure_count();
 }
 
+#[allow(dead_code)]
+fn iterator_test() {
+    lazy_test();
+    map_and_filter();
+}
+
 fn main() {
     // shape_test();
-
     // why(); // Just to see how super works
-
     // loop_vec();
-
     // error_test();
-
     // trait_test();
-
     // lifetime_test();
-
     // closure_test();
+
+    iterator_test();
 }
