@@ -65,11 +65,45 @@ impl<T> Test<T> {
 
 // Why did i do this to myself
 pub fn closure_test() {
+    let y = Test::A(10);
     let x: Test<i32> = Test::B;
 
     let col = || 12;
 
     let result = x.test_a(col).unwrap_err();
 
-    println!("{result}");
+    println!("{result} {:?}", y.test_a(|| 10).unwrap());
+}
+
+pub fn closure_count() {
+    #[derive(Debug)]
+    #[allow(dead_code)]
+    struct Rectagle {
+        width: u32,
+        height: u32,
+    }
+
+    let mut list = vec![
+        Rectagle {
+            width: 10,
+            height: 1,
+        },
+        Rectagle {
+            width: 3,
+            height: 5,
+        },
+        Rectagle {
+            width: 7,
+            height: 12,
+        },
+    ];
+
+    let mut num_sort_count = 0;
+
+    list.sort_by_key(|r| {
+        num_sort_count += 1;
+        r.width
+    });
+
+    println!("{list:?} took {num_sort_count} operations to sort");
 }

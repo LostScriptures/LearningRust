@@ -1,4 +1,4 @@
-use crate::closures::{closure_borrow, closure_thread, implied_type};
+use crate::closures::{closure_borrow, closure_count, closure_thread, implied_type};
 #[allow(unused_imports)]
 use crate::vecs::*;
 #[allow(unused_imports)]
@@ -11,6 +11,7 @@ use std::vec;
 pub mod closures;
 pub mod errors;
 pub mod generics;
+pub mod iterators;
 pub mod shapes;
 pub mod vecs;
 
@@ -98,6 +99,7 @@ fn closure_test() {
     println!("{}", implied_type());
     closure_borrow();
     closure_thread();
+    closure_count();
 }
 
 fn main() {
@@ -113,5 +115,5 @@ fn main() {
 
     // lifetime_test();
 
-    closure_test();
+    // closure_test();
 }
