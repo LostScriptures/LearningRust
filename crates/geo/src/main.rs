@@ -107,6 +107,7 @@ fn iterator_test() {
 #[allow(dead_code)]
 fn spointer_test() {
     custom_spointer_test();
+    cons_test();
 }
 
 fn main() {

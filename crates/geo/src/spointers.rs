@@ -1,12 +1,45 @@
+use crate::List::{Cons, Nil};
 use std::{
     fmt::Display,
     ops::{Deref, DerefMut},
+    rc::Rc,
 };
 
 // let list = List::Cons(1, Box::new(List::Cons(2, Box::new(List::Cons(3, Box::new(List::Nil))))));
 pub enum List {
-    Cons(i32, Box<List>),
+    Cons(i32, Rc<List>),
     Nil,
+}
+
+impl List {
+    pub fn print(&self) {
+        if let Cons(val, next) = self {
+            print!("{} ", val);
+            next.print();
+        } else {
+            println!("");
+        }
+    }
+}
+
+pub fn cons_test() {
+    let a = Rc::new(Cons(5, Rc::new(Cons(10, Rc::new(Nil)))));
+    println!("Refernce Count: {}", Rc::strong_count(&a));
+    let b = Cons(3, Rc::clone(&a));
+    println!("Refernce Count: {}", Rc::strong_count(&a));
+    let c = Cons(4, Rc::clone(&a));
+
+    print!("A: ");
+    a.print();
+    println!("Refernce Count: {}", Rc::strong_count(&a));
+    {
+        print!("B: ");
+        b.print();
+        println!("Refernce Count: {}", Rc::strong_count(&a));
+    }
+    print!("C: ");
+    c.print();
+    println!("Refernce Count: {}", Rc::strong_count(&a));
 }
 
 pub struct MyBox<T>(T)

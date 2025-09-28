@@ -53,51 +53,51 @@ This agenda is used as an orientation.
   - [X] Else 
   - [X] Else If
 - [X] Functions
-  - [ ] Closures
+  - [X] Closures
 - [ ] The borrow checker
-  - [ ] Ownership
+  - [X] Ownership
     - [ ] change of ownership
     - [ ] move
-  - [ ] References
-    - [ ] read only
-    - [ ] mutable 
-  - [ ] Memory
-    - [ ] Stack for scalar values
-    - [ ] Heap for complex data types
+  - [X] References
+    - [X] read only
+    - [X] mutable 
+  - [X] Memory
+    - [X] Stack for scalar values
+    - [X] Heap for complex data types
 - [ ] Loops
-  - [ ] `loop`
-  - [ ] `for` 
+  - [X] `loop`
+  - [X] `for` 
     - [ ] ranges
-  - [ ] `while`
+  - [X] `while`
 
 
-- [ ] Results
-  - [ ] OK & Error
-  - [ ] unwrap
-    - [ ] or
-    - [ ] or else
-  - [ ] expect
+- [X] Results
+  - [X] OK & Error
+  - [X] unwrap
+    - [X] or
+    - [X] or else
+  - [X] expect
 - [ ] Pattern matching
   - [ ] Why?
-  - [ ] `match`
+  - [X] `match`
   - [ ] additional conditions
   - [ ] `@`
-  - [ ] `if let`
+  - [X] `if let`
   - [ ] `while let`
   - [ ] `matches!`
-- [ ] Options
-  - [ ] Some
-  - [ ] None
+- [X] Options
+  - [X] Some
+  - [X] None
 - [ ] Enums
   - [ ] Enums as Wrappers
-- [ ] Structs
-  - [ ] declaration
-  - [ ] impl
+- [SDX] Structs
+  - [X] declaration
+  - [X] impl
 - [ ] Deriving
 
-- [ ] Modules and visibility
+- [X] Modules and visibility
 
-- [ ] Generics
+- [X] Generics
 - [ ] Traits
 - [ ] Polymorphisms
 
