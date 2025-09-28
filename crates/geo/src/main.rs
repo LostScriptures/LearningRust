@@ -1,19 +1,14 @@
-use crate::closures::{closure_borrow, closure_count, closure_thread, implied_type};
-use crate::iterators::{lazy_test, map_and_filter};
 #[allow(unused_imports)]
-use crate::vecs::*;
-#[allow(unused_imports)]
-use crate::{
-    generics::{Article, Post, lifetime_test, notify},
-    shapes::*,
-};
+use crate::{closures::*, generics::*, iterators::*, shapes::*, spointers::*, vecs::*};
 use std::vec;
 
 pub mod closures;
+pub mod custombintree;
 pub mod errors;
 pub mod generics;
 pub mod iterators;
 pub mod shapes;
+pub mod spointers;
 pub mod vecs;
 
 pub fn test() {
@@ -109,6 +104,11 @@ fn iterator_test() {
     map_and_filter();
 }
 
+#[allow(dead_code)]
+fn spointer_test() {
+    custom_spointer_test();
+}
+
 fn main() {
     // shape_test();
     // why(); // Just to see how super works
@@ -117,6 +117,7 @@ fn main() {
     // trait_test();
     // lifetime_test();
     // closure_test();
+    // iterator_test();
 
-    iterator_test();
+    spointer_test();
 }

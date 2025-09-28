@@ -1,7 +1,24 @@
+/// Takes a query string and a text and returns an `iterator` over all lines containing the query
+/// # Example
+/// ```
+/// use minigrep::search;
+/// let query = "to";
+/// let content ="To be,\nor not,\nto be";
+/// assert_eq!(vec!["to be"], search(query, content).collect::<Vec<&str>>());
+/// ```
 pub fn search<'a>(query: &str, contents: &'a str) -> impl Iterator<Item = &'a str> {
     contents.lines().filter(move |line| line.contains(query))
 }
 
+/// Takes a query string and a text and returns an iterator over all lines containing the query
+/// no matter what caese they are in
+/// # Example
+/// ```
+/// use minigrep::search_case_insensitive;
+/// let query = "to";
+/// let content ="To be,\nor not,\nto be";
+/// assert_eq!(vec!["To be,", "to be"], search_case_insensitive(query, content).collect::<Vec<&str>>());
+/// ```
 pub fn search_case_insensitive<'a>(
     query: &str,
     contents: &'a str,

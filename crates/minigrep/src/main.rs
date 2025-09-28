@@ -1,3 +1,7 @@
+//! My Version of the grep IO Project from the Rust learning Book
+//! # Usage
+//! minigrep [search term] [file path]
+
 use std::env;
 use std::error::Error;
 use std::fs;
