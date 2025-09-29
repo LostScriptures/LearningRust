@@ -3,6 +3,7 @@ use crate::{closures::*, generics::*, iterators::*, shapes::*, spointers::*, vec
 use std::vec;
 
 pub mod closures;
+pub mod concurrency;
 pub mod custombintree;
 pub mod errors;
 pub mod generics;
@@ -119,6 +120,5 @@ fn main() {
     // lifetime_test();
     // closure_test();
     // iterator_test();
-
-    spointer_test();
+    // spointer_test();
 }
