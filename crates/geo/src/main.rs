@@ -1,3 +1,4 @@
+use crate::concurrency::{capture_thread_test, thread_test};
 #[allow(unused_imports)]
 use crate::{closures::*, generics::*, iterators::*, shapes::*, spointers::*, vecs::*};
 use std::vec;
@@ -111,6 +112,11 @@ fn spointer_test() {
     cons_test();
 }
 
+#[allow(dead_code)]
+fn concurrency_test() {
+    thread_test();
+    capture_thread_test();
+}
 fn main() {
     // shape_test();
     // why(); // Just to see how super works
@@ -121,4 +127,7 @@ fn main() {
     // closure_test();
     // iterator_test();
     // spointer_test();
+
+    concurrency_test();
+    
 }
