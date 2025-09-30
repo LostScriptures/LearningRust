@@ -135,6 +135,5 @@ fn main() {
     // closure_test();
     // iterator_test();
     // spointer_test();
-
-    concurrency_test();
+    // concurrency_test();
 }
