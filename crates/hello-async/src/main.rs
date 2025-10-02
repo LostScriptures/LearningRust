@@ -54,6 +54,7 @@ fn spawn_tasks() {
     });
 }
 
+#[allow(dead_code)]
 fn task_join() {
     trpl::run(async {
         let fut1 = async {
@@ -74,6 +75,21 @@ fn task_join() {
     });
 }
 
+#[allow(dead_code)]
+fn task_messages() {
+    let f1 = async {
+        let (tx, mut rx) = trpl::channel();
+
+        let val = String::from("°w°");
+        tx.send(val).unwrap();
+
+        let received = rx.recv().await.unwrap();
+        println!("Received: {received}");
+    };
+
+    trpl::block_on(f1);
+}
+
 fn main() {
-    task_join();
+    task_messages();
 }
