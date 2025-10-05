@@ -42,8 +42,7 @@ trait State {
     fn can_add_text(&self) -> bool {
         false
     }
-    #[allow(unused_variables)]
-    fn content<'a>(&self, post: &'a Post) -> &'a str {
+    fn content<'a>(&self, _: &'a Post) -> &'a str {
         ""
     }
 }
