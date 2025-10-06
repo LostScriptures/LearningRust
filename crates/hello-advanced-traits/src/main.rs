@@ -1,3 +1,10 @@
+#[allow(unused_imports)]
+use crate::{associated::*, defaults::*};
+
+pub mod associated;
+pub mod defaults;
+
 fn main() {
-    println!("Hello, world!");
+    // asspciated_test();
+    // defaults_test();
 }
