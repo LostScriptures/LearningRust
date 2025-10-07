@@ -366,6 +366,10 @@ name = "hello-unsafe"
 version = "0.1.0"
 
 [[package]]
+name = "hello-webserver"
+version = "0.1.0"
+
+[[package]]
 name = "hello-world"
 version = "0.1.0"
 dependencies = [
