@@ -11,9 +11,7 @@ type Result<T> = std::result::Result<T, PoolError>;
 #[derive(Debug)]
 #[allow(non_camel_case_types)]
 pub enum PoolError {
-    /// Occures when a 0 balue was passed to the `ThreadPool::new()` function
     WRONG_SIZE_ERROR,
-    /// 
     WORKER_CREATION_ERROR(io::Error),
     JOB_SEND_ERROR(SendError<Job>),
 }
@@ -22,16 +20,17 @@ impl fmt::Display for PoolError {
         match self {
             PoolError::WRONG_SIZE_ERROR => write!(f, "0 is not valid for thread pool size"),
             PoolError::WORKER_CREATION_ERROR(e) => {
-                write!(f, "error creating worker thread: {e}")
+                write!(f, "error creating worker thread: {e:#?}")
             }
             PoolError::JOB_SEND_ERROR(e) => {
-                write!(f, "error sending Job to thread: {e}")
+                write!(f, "error sending Job to thread: {e:#?}")
             }
         }
     }
 }
 
 // -- Thread Pool --
+#[allow(dead_code)]
 struct Worker {
     id: usize,
     thread: thread::JoinHandle<()>,
@@ -40,7 +39,23 @@ struct Worker {
 impl Worker {
     fn new(id: usize, receiver: Arc<Mutex<Receiver<Job>>>) -> io::Result<Worker> {
         let builder = thread::Builder::new();
-        let thread = builder.spawn(|| {})?;
+        let thread = builder.spawn(move || {
+            loop {
+                let message = receiver.lock().expect("Mutex poisoned exiting...").recv();
+
+                match message {
+                    Ok(job) => {
+                        println!("Worker: {id} got Job");
+
+                        job();
+                    }
+                    Err(_) => {
+                        println!("Worker {id} disconnected. shutdown...");
+                        break;
+                    }
+                }
+            }
+        })?;
 
         Ok(Worker { id, thread })
     }
@@ -48,9 +63,10 @@ impl Worker {
 
 type Job = Box<dyn FnOnce() + Send + 'static>;
 
+#[allow(dead_code)]
 pub struct ThreadPool {
     workers: Vec<Worker>,
-    sender: mpsc::Sender<Job>,
+    sender: Option<mpsc::Sender<Job>>,
 }
 
 impl ThreadPool {
@@ -80,7 +96,10 @@ impl ThreadPool {
             }
         }
 
-        Ok(ThreadPool { workers, sender })
+        Ok(ThreadPool {
+            workers,
+            sender: Some(sender),
+        })
     }
 
     pub fn execute<F>(&self, f: F) -> Result<()>
@@ -88,9 +107,20 @@ impl ThreadPool {
         F: FnOnce() + Send + 'static,
     {
         let job = Box::new(f);
-        if let Err(e) = self.sender.send(job) {
+        if let Err(e) = self.sender.as_ref().unwrap().send(job) {
             return Err(PoolError::JOB_SEND_ERROR(e));
         }
         Ok(())
+    }
+}
+
+impl Drop for ThreadPool {
+    fn drop(&mut self) {
+        drop(self.sender.take());
+
+        for worker in &mut self.workers.drain(..) {
+            println!("Shutting down worker {}", worker.id);
+            worker.thread.join().unwrap();
+        }
     }
 }
