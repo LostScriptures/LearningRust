@@ -24,8 +24,8 @@ pub fn defaults_test() {
     );
 }
 
-struct Millimeters(u32);
-struct Meters(u32);
+pub struct Millimeters(u32);
+pub struct Meters(u32);
 
 impl Add<Meters> for Millimeters {
     type Output = Millimeters;
