@@ -7,6 +7,13 @@ pub struct Config {
 }
 
 impl Config {
+    /// Creates a new config struct
+    pub fn new() -> Config {
+        Config {
+            settings: HashMap::new(),
+        }
+    }
+
     /// Loads the config from the config file
     pub fn load(&mut self) -> io::Result<()> {
         let filepath = "config.txt";
@@ -44,5 +51,38 @@ impl Config {
                 })
                 .collect::<String>(),
         );
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn save_config_test() {
+        let mut conf = Config::new();
+
+        conf.settings.insert(String::from("a"), String::from("1"));
+        conf.settings
+            .insert(String::from("b"), String::from("true"));
+        conf.settings
+            .insert(String::from("c"), String::from("test"));
+
+        conf.save();
+    }
+
+    #[test]
+    fn load_config_test() -> io::Result<()> {
+        let mut conf = Config::new();
+        let mut compare = HashMap::new();
+
+        compare.insert(String::from("a"), String::from("1"));
+        compare.insert(String::from("b"), String::from("true"));
+        compare.insert(String::from("c"), String::from("test"));
+
+        conf.load()?;
+
+        assert_eq!(conf.settings, compare);
+        Ok(())
     }
 }

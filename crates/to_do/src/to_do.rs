@@ -7,7 +7,7 @@ use std::{
 };
 
 /// Allows the distinction between the differnts stages of completion a task can be in
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Progress {
     ToDo(Task),
     InProgress(Task),
@@ -15,7 +15,7 @@ pub enum Progress {
 }
 
 /// The basic struct that holds the Info of a single task
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Task {
     pub id: i32,
     pub title: String,
@@ -102,14 +102,18 @@ impl Task {
 #[derive(Debug)]
 pub struct AppData {
     tasks: HashMap<i32, Progress>,
-    config: Config,
+    pub config: Config,
 }
 
 impl AppData {
-    /// Loads the saved Tasks into the tasks HashMap and the config from the files
-    pub fn _load(&mut self) -> io::Result<()> {
-        self.config.load()?;
-
+    pub fn new() -> AppData {
+        AppData {
+            tasks: HashMap::new(),
+            config: Config::new(),
+        }
+    }
+    /// Loads the saved Tasks into the tasks HashMap
+    pub fn load(&mut self) -> io::Result<()> {
         let mut file = File::open("data.bin")?;
         let mut buf = [0u8; 4];
 
@@ -144,10 +148,8 @@ impl AppData {
         Ok(())
     }
 
-    /// Saves the loaded tasks into a file and the loaded config to the config file
-    pub fn _save(&self) -> io::Result<()> {
-        self.config.save();
-
+    /// Saves the saves tasks into a file
+    pub fn save(&self) -> io::Result<()> {
         let mut file = File::create("data.bin")?;
         let len = self.tasks.len() as u32;
         file.write_all(&len.to_le_bytes())?;
@@ -170,9 +172,20 @@ impl AppData {
         Ok(())
     }
 
+    /// Saves the apps config
+    pub fn save_config(&self) {
+        self.config.save();
+    }
+
+    /// Loads the apps config
+    pub fn load_config(&mut self) -> io::Result<()> {
+        self.config.load()?;
+        Ok(())
+    }
+
     /// Adding a task to the tasks HashMap
     /// The IDs are handeled automatically
-    pub fn _add_task(&mut self, title: String, description: String) {
+    pub fn add_task(&mut self, title: String, description: String) {
         let id = match self.tasks.keys().max() {
             Some(id) => {
                 if *id == i32::MAX {
@@ -196,7 +209,7 @@ impl AppData {
     /// # Result
     /// Returns `Err` if there was no entry with the given id
     /// Returns `Ok` containing the deleted item
-    pub fn _del_task(&mut self, id: i32) -> Result<Progress, ()> {
+    pub fn del_task(&mut self, id: i32) -> Result<Progress, ()> {
         if let Some(item) = self.tasks.remove(&id) {
             return Ok(item);
         } else {
@@ -205,12 +218,65 @@ impl AppData {
     }
 
     /// Get a reference to the task HashMap
-    pub fn _get_tasks(&self) {
+    pub fn get_tasks(&self) {
         todo!();
     }
 
     /// Get a specific task by id
-    pub fn _get_task_by_id(&self) {
-        todo!();
+    /// # Result
+    /// `Ok`: Returns the Progress with the contained task
+    /// `Err`: Returns if the task couldn't be found
+    pub fn get_task_by_id(&self, id: i32) -> Result<Progress, ()> {
+        if let Some(p) = self.tasks.get(&id) {
+            Ok(p.clone())
+        } else {
+            Err(())
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn add_task() {
+        let mut data = AppData::new();
+        let compare = Task::new(
+            0,
+            String::from("test"),
+            String::from("This is a test description"),
+        );
+
+        data.add_task(
+            String::from("test"),
+            String::from("This is a test description"),
+        );
+        assert_eq!(compare, data.get_task_by_id(0).unwrap());
+    }
+
+    #[test]
+    fn save_tasks() {
+        let mut data = AppData::new();
+
+        data.add_task(
+            String::from("test"),
+            String::from("This is a test description"),
+        );
+
+        assert!(data.save().is_ok());
+    }
+
+    #[test]
+    fn load_tasks() {
+        let mut data = AppData::new();
+        let compare = Task::new(
+            0,
+            String::from("test"),
+            String::from("This is a test description"),
+        );
+
+        assert!(data.load().is_ok());
+        assert_eq!(data.get_task_by_id(0).unwrap(), compare);
     }
 }
