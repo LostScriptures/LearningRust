@@ -1,24 +1,41 @@
-use std::{collections::HashMap, fs};
+use std::{collections::HashMap, fs, io};
 
 /// Stores the App configuration parameters
-pub struct Config<'a> {
-    filepath: &'a str,
-    settings: HashMap<&'a str, &'a str>,
+#[derive(Debug)]
+pub struct Config {
+    pub settings: HashMap<String, String>,
 }
 
-impl Config<'_> {
+impl Config {
     /// Loads the config from the config file
-    pub fn load(&mut self) {
-        todo!();
+    pub fn load(&mut self) -> io::Result<()> {
+        let filepath = "config.txt";
+
+        let contents = fs::read_to_string(filepath)?;
+        for line in contents.lines() {
+            if line.starts_with("#") {
+                continue;
+            }
+
+            let mut parts = line.splitn(2, ":");
+
+            if let (Some(attrib), Some(val)) = (parts.next(), parts.next()) {
+                self.settings
+                    .insert(attrib.trim().to_string(), val.trim().to_string());
+            }
+        }
+
+        Ok(())
     }
 
     /// Saves the config to the config file
     pub fn save(&self) {
-        fs::write(
-            self.filepath,
+        let filepath = "config.txt";
+        let _ = fs::write(
+            filepath,
             self.settings
                 .iter()
-                .map(|(&a, &b)| {
+                .map(|(a, b)| {
                     let mut str = String::from(a);
                     str.push_str(":");
                     str.push_str(b);
@@ -27,6 +44,5 @@ impl Config<'_> {
                 })
                 .collect::<String>(),
         );
-        todo!();
     }
 }

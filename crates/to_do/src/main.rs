@@ -7,5 +7,7 @@ mod display;
 mod to_do;
 
 fn main() {
-    println!("{}", size_of::<Task>());
+    // Load config
+    // Load Save
+    // start menue
 }
