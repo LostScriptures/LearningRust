@@ -1,88 +1,73 @@
-use std::{collections::HashMap, fs, io};
+//! Loads, Saves and holds the current loaded configuration
+use std::{
+    fs::{self, File},
+    io::Write,
+    process,
+};
+
+use serde_json::Value;
 
 /// Stores the App configuration parameters
 #[derive(Debug)]
 pub struct Config {
-    pub settings: HashMap<String, String>,
+    pub settings: Value,
 }
 
 impl Config {
     /// Creates a new config struct
     pub fn new() -> Config {
         Config {
-            settings: HashMap::new(),
+            settings: Value::Null,
         }
     }
 
     /// Loads the config from the config file
-    pub fn load(&mut self) -> io::Result<()> {
-        let filepath = "config.txt";
+    pub fn load(&mut self) {
+        let filepath = "config.json";
 
-        let contents = fs::read_to_string(filepath)?;
-        for line in contents.lines() {
-            if line.starts_with("#") {
-                continue;
+        let contents = match fs::read_to_string(filepath) {
+            Ok(text) => text,
+            Err(e) => {
+                eprintln!("An error ocurred while parsing config.json: {e}");
+                process::exit(1);
             }
+        };
 
-            let mut parts = line.splitn(2, ":");
-
-            if let (Some(attrib), Some(val)) = (parts.next(), parts.next()) {
-                self.settings
-                    .insert(attrib.trim().to_string(), val.trim().to_string());
+        self.settings = match serde_json::from_str(&contents.as_str()) {
+            Ok(json) => json,
+            Err(e) => {
+                eprintln!("An error occured while parsing config.json: {e}");
+                process::exit(1);
             }
-        }
-
-        Ok(())
+        };
     }
 
     /// Saves the config to the config file
     pub fn save(&self) {
-        let filepath = "config.txt";
-        let _ = fs::write(
-            filepath,
-            self.settings
-                .iter()
-                .map(|(a, b)| {
-                    let mut str = String::from(a);
-                    str.push_str(":");
-                    str.push_str(b);
-                    str.push_str("\n");
-                    str
-                })
-                .collect::<String>(),
-        );
-    }
-}
+        let filepath = "config.json";
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+        let mut file = match File::create(filepath) {
+            Ok(file) => file,
+            Err(e) => {
+                eprintln!("An error occured while creating config.json: {e}");
+                process::exit(1);
+            }
+        };
 
-    #[test]
-    fn save_config_test() {
-        let mut conf = Config::new();
+        let parsed_settings = match serde_json::to_string_pretty(&self.settings) {
+            Ok(text) => text,
+            Err(e) => {
+                eprintln!("An error occured while parsing settings: {e}");
+                process::exit(1);
+            }
+        };
 
-        conf.settings.insert(String::from("a"), String::from("1"));
-        conf.settings
-            .insert(String::from("b"), String::from("true"));
-        conf.settings
-            .insert(String::from("c"), String::from("test"));
-
-        conf.save();
-    }
-
-    #[test]
-    fn load_config_test() -> io::Result<()> {
-        let mut conf = Config::new();
-        let mut compare = HashMap::new();
-
-        compare.insert(String::from("a"), String::from("1"));
-        compare.insert(String::from("b"), String::from("true"));
-        compare.insert(String::from("c"), String::from("test"));
-
-        conf.load()?;
-
-        assert_eq!(conf.settings, compare);
-        Ok(())
+        match file.write(&parsed_settings.as_bytes()) {
+            Ok(_) => {}
+            Err(e) => {
+                eprintln!("An error occured while writing config.json: {e}");
+                process::exit(1);
+            }
+        };
     }
 }

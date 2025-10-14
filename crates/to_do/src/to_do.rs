@@ -14,6 +14,16 @@ pub enum Progress {
     Done(Task),
 }
 
+impl Progress {
+    pub fn get(&self) -> &Task {
+        match self {
+            ToDo(task) => &task,
+            InProgress(task) => &task,
+            Done(task) => &task,
+        }
+    }
+}
+
 /// The basic struct that holds the Info of a single task
 #[derive(Debug, Clone, PartialEq)]
 pub struct Task {
@@ -173,19 +183,18 @@ impl AppData {
     }
 
     /// Saves the apps config
-    pub fn save_config(&self) {
+    pub fn config_save(&self) {
         self.config.save();
     }
 
     /// Loads the apps config
-    pub fn load_config(&mut self) -> io::Result<()> {
-        self.config.load()?;
-        Ok(())
+    pub fn config_load(&mut self) {
+        self.config.load();
     }
 
     /// Adding a task to the tasks HashMap
     /// The IDs are handeled automatically
-    pub fn add_task(&mut self, title: String, description: String) {
+    pub fn task_add(&mut self, title: String, description: String) {
         let id = match self.tasks.keys().max() {
             Some(id) => {
                 if *id == i32::MAX {
@@ -209,7 +218,7 @@ impl AppData {
     /// # Result
     /// Returns `Err` if there was no entry with the given id
     /// Returns `Ok` containing the deleted item
-    pub fn del_task(&mut self, id: i32) -> Result<Progress, ()> {
+    pub fn task_delete(&mut self, id: i32) -> Result<Progress, ()> {
         if let Some(item) = self.tasks.remove(&id) {
             return Ok(item);
         } else {
@@ -217,9 +226,25 @@ impl AppData {
         }
     }
 
-    /// Get a reference to the task HashMap
-    pub fn get_tasks(&self) {
-        todo!();
+    /// Get a Vector containing references to all tasks
+    pub fn get_tasks(&self) -> Vec<&Progress> {
+        self.tasks.values().collect::<Vec<&Progress>>()
+    }
+
+    /// Gets the total count of tasks
+    pub fn get_task_count(&self) -> usize {
+        self.tasks.iter().count()
+    }
+
+    /// Gets the count of completed tasks
+    pub fn get_task_count_finished(&self) -> usize {
+        let mut completed: usize = 0;
+        self.tasks.iter().for_each(|(_, task)| {
+            if let Done(_) = task {
+                completed += 1;
+            }
+        });
+        completed
     }
 
     /// Get a specific task by id
@@ -248,7 +273,7 @@ mod tests {
             String::from("This is a test description"),
         );
 
-        data.add_task(
+        data.task_add(
             String::from("test"),
             String::from("This is a test description"),
         );
@@ -259,7 +284,7 @@ mod tests {
     fn save_tasks() {
         let mut data = AppData::new();
 
-        data.add_task(
+        data.task_add(
             String::from("test"),
             String::from("This is a test description"),
         );
