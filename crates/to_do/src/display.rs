@@ -37,7 +37,7 @@ impl Display {
             process::exit(1);
         }
 
-        let json: Value = match serde_json::from_str(&buffer.as_str()) {
+        let json: Value = match serde_json::from_str(buffer.as_str()) {
             Ok(json) => json,
             Err(e) => {
                 eprintln!("An error occured while parsing menues.json: {e}");

@@ -17,9 +17,9 @@ pub enum Progress {
 impl Progress {
     pub fn get(&self) -> &Task {
         match self {
-            ToDo(task) => &task,
-            InProgress(task) => &task,
-            Done(task) => &task,
+            ToDo(task) => task,
+            InProgress(task) => task,
+            Done(task) => task,
         }
     }
 }
@@ -220,9 +220,9 @@ impl AppData {
     /// Returns `Ok` containing the deleted item
     pub fn task_delete(&mut self, id: i32) -> Result<Progress, ()> {
         if let Some(item) = self.tasks.remove(&id) {
-            return Ok(item);
+            Ok(item)
         } else {
-            return Err(());
+            Err(())
         }
     }
 
@@ -233,7 +233,7 @@ impl AppData {
 
     /// Gets the total count of tasks
     pub fn get_task_count(&self) -> usize {
-        self.tasks.iter().count()
+        self.tasks.len()
     }
 
     /// Gets the count of completed tasks

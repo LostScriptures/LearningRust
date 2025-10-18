@@ -33,7 +33,7 @@ impl Config {
             }
         };
 
-        self.settings = match serde_json::from_str(&contents.as_str()) {
+        self.settings = match serde_json::from_str(contents.as_str()) {
             Ok(json) => json,
             Err(e) => {
                 eprintln!("An error occured while parsing config.json: {e}");
@@ -62,8 +62,8 @@ impl Config {
             }
         };
 
-        match file.write(&parsed_settings.as_bytes()) {
-            Ok(_) => {}
+        match file.write_all(parsed_settings.as_bytes()) {
+            Ok(_) => return,
             Err(e) => {
                 eprintln!("An error occured while writing config.json: {e}");
                 process::exit(1);
