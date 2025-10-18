@@ -1,6 +1,6 @@
-use to_do::*;
+use std::io;
 
-// I learned rust mostly out of interest, not like I need it for work
+use to_do::*;
 
 mod config;
 mod display;
@@ -50,12 +50,14 @@ fn main() {
     // Save & Exit
 }
 
-fn load(data: &mut AppData) {
+fn load(data: &mut AppData) -> io::Result<()> {
     data.config_load();
-    data.load();
+    data.load()?;
+    Ok(())
 }
 
-fn save(data: &AppData) {
+fn save(data: &AppData) -> io::Result<()> {
     data.config_save();
-    data.save();
+    data.save()?;
+    Ok(())
 }
