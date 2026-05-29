@@ -57,17 +57,17 @@ This agenda is used as an orientation.
 - [ ] The borrow checker
   - [X] Ownership
     - [ ] change of ownership
-    - [ ] move
+    - [X] move
   - [X] References
     - [X] read only
     - [X] mutable 
   - [X] Memory
     - [X] Stack for scalar values
     - [X] Heap for complex data types
-- [ ] Loops
+- [X] Loops
   - [X] `loop`
   - [X] `for` 
-    - [ ] ranges
+    - [X] ranges
   - [X] `while`
 
 
@@ -81,15 +81,15 @@ This agenda is used as an orientation.
   - [ ] Why?
   - [X] `match`
   - [ ] additional conditions
-  - [ ] `@`
+  - [X] `@`
   - [X] `if let`
-  - [ ] `while let`
+  - [X] `while let`
   - [ ] `matches!`
 - [X] Options
   - [X] Some
   - [X] None
-- [ ] Enums
-  - [ ] Enums as Wrappers
+- [X] Enums
+  - [X] Enums as Wrappers
 - [SDX] Structs
   - [X] declaration
   - [X] impl
@@ -98,8 +98,8 @@ This agenda is used as an orientation.
 - [X] Modules and visibility
 
 - [X] Generics
-- [ ] Traits
-- [ ] Polymorphisms
+- [X] Traits
+- [X] Polymorphisms
 
 - [ ] Useful libraries
   - [ ] tracing
@@ -109,6 +109,6 @@ This agenda is used as an orientation.
     - [ ] axum
     - [ ] tonic
 
-- [ ] Multithreading
-  - [ ] Channels
+- [X] Multithreading
+  - [X] Channels
 - [ ] Async with Tokio
