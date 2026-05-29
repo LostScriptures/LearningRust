@@ -81,6 +81,7 @@ impl Node {
 #[cfg(test)]
 mod tests {
     use crate::custombintree::{Node, Order};
+    use rand::prelude::*;
 
     #[test]
     fn make_node() {
@@ -160,5 +161,25 @@ mod tests {
         root.fill(&data);
 
         assert_eq!(vec![1, 2, 10, 12, 13, 50], root.get_ordered(Order::ASC));
+    }
+
+    #[test]
+    fn rnd_fill_test() {
+        // To see the output of this test run: cargo test custombintree -- --show-output
+        let mut root = Node::new(0);
+        let mut data = Vec::new();
+
+        for _ in 1..100 {
+            data.push(rand::rng().random_range(1..=100));
+        }
+
+        root.fill(&data);
+
+        println!("{data:?}\n");
+
+        for item in root.get_ordered(Order::ASC) {
+            print!("{item}, ")
+        }
+        println!("")
     }
 }
